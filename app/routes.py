@@ -25,7 +25,12 @@ def pages():
     return make_response('success', 201)
 
 
-@app.route('/pages/<int:page_id>')
+@app.route('/pages/<int:page_id>', methods=['GET', 'DELETE'])
 def page(page_id):
     page = Page.query.get(page_id)
-    return jsonify(page=page.serialize())
+    if request.method == 'GET':
+        return jsonify(page=page.serialize())
+    elif request.method == 'DELETE':
+        db.session.delete(page)
+        db.session.commit()
+        return make_response('', 204)
