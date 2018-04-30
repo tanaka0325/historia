@@ -1,0 +1,16 @@
+{
+  "name": "historia",
+  "version": "0.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/react": "^16.3.13",
+    "@types/react-dom": "^16.0.5",
+    "parcel-bundler": "^1.7.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2"
+  },
+  "devDependencies": {
+    "typescript": "^2.8.3"
+  }
+}
