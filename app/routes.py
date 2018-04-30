@@ -25,12 +25,18 @@ def pages():
     return make_response('success', 201)
 
 
-@app.route('/pages/<int:page_id>', methods=['GET', 'DELETE'])
+@app.route('/pages/<int:page_id>', methods=['GET', 'DELETE', 'PATCH'])
 def page(page_id):
     page = Page.query.get(page_id)
     if request.method == 'GET':
         return jsonify(page=page.serialize())
     elif request.method == 'DELETE':
         db.session.delete(page)
+        db.session.commit()
+        return make_response('', 204)
+    elif request.method == 'PATCH':
+        data = request.json
+        for k in data.keys():
+            setattr(page, k, data[k])
         db.session.commit()
         return make_response('', 204)
