@@ -14,3 +14,14 @@ class Page(db.Model):
 
     def __repr__(self):
         return '<Page {}>'.format(self.title)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'url': self.url,
+            'title': self.title,
+            'is_read': self.is_read,
+            'note': self.note,
+            'score': self.score,
+            'created_at': self.created_at
+        }
