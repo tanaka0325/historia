@@ -1,3 +1,7 @@
-import * as React from "react";
+import * as React from 'react';
 
-export const App = () => `Hello props.name. This is App component!`;
+import {PageList} from './PageList';
+
+export const App = () => {
+  return <PageList />;
+};
