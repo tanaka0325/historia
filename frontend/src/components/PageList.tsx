@@ -45,7 +45,7 @@ export class PageList extends React.Component {
       );
     });
     return (
-      <table class="table is-fullwidth is-hoverable">
+      <table className="table is-fullwidth is-hoverable">
         <thead>
           <tr>
             <th>id</th>
