@@ -49,7 +49,6 @@ export class PageList extends React.Component {
         <thead>
           <tr>
             <th>id</th>
-            <th>url</th>
             <th>title</th>
             <th>is_read</th>
             <th>note</th>
