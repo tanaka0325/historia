@@ -25,6 +25,9 @@ export const PageItem = (props: Page) => {
         <button type="button" onClick={() => props.removePage(props.page.id)}>
           remove
         </button>
+        <button type="button" onClick={() => props.openEditModal()}>
+          edit
+        </button>
       </td>
     </tr>
   );

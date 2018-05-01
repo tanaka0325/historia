@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as axios from 'axios';
 
 import {PageItem} from './PageItem';
+import {Modal} from './Modal';
 
 const API_URL = 'http://localhost:5000/pages';
 
@@ -11,6 +12,7 @@ export class PageList extends React.Component {
 
     this.state = {
       pages: [],
+      isModal: false,
     };
   }
 
@@ -38,14 +40,25 @@ export class PageList extends React.Component {
     });
   };
 
+  toggleModal = () => {
+    this.setState({
+      isModal: !this.state.isModal,
+    });
+  };
+
   render() {
     const pages = this.state.pages.map(page => {
       return (
-        <PageItem key={page.id} page={page} removePage={this.removePage} />
+        <PageItem
+          key={page.id}
+          openEditModal={this.toggleModal}
+          page={page}
+          removePage={this.removePage}
+        />
       );
     });
-    return (
-      <table className="table is-fullwidth is-hoverable">
+    return [
+      <table key="PageListTable" className="table is-fullwidth is-hoverable">
         <thead>
           <tr>
             <th>id</th>
@@ -58,7 +71,12 @@ export class PageList extends React.Component {
           </tr>
         </thead>
         <tbody>{pages}</tbody>
-      </table>
-    );
+      </table>,
+      <Modal
+        key="PageListModal"
+        isActive={this.state.isModal}
+        closeModal={this.toggleModal}
+      />,
+    ];
   }
 }
