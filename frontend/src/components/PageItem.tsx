@@ -6,6 +6,7 @@ export const PageItem = (props: Page) => {
   return (
     <tr>
       <td>{props.page.id}</td>
+      <td>{props.page.url}</td>
       <td>{props.page.title}</td>
       <td>{props.page.is_read}</td>
       <td>{props.page.note}</td>
