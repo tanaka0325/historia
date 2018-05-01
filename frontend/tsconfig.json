@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "types": ["react"],
+    "lib": ["dom", "es2015", "es2017"],
+    "jsx": "react",
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "target": "es5"
+  }
+}
