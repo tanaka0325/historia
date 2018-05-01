@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {Page} from './frontend/src/entities/Page.ts';
+import {Page} from '../entities/Page';
 
 export const PageItem = (props: Page) => {
   return (
