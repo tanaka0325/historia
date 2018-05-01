@@ -21,7 +21,11 @@ export const PageItem = (props: Page) => {
       <td>{props.page.note}</td>
       <td>{props.page.score}</td>
       <td>{displayDatetime(props.page.created_at)}</td>
-      <td>page.action</td>
+      <td>
+        <button type="button" onClick={() => props.removePage(props.page.id)}>
+          remove
+        </button>
+      </td>
     </tr>
   );
 };
