@@ -1,6 +1,12 @@
 import * as React from 'react';
 
 import {Page} from '../entities/Page';
+import {DateService} from '../services/DateService.ts';
+
+const displayDatetime = utcTime => {
+  const d = new Date(Date.parse(utcTime));
+  return DateService.toLocaleDateTimeString(d);
+};
 
 export const PageItem = (props: Page) => {
   return (
@@ -11,7 +17,7 @@ export const PageItem = (props: Page) => {
       <td>{props.page.is_read}</td>
       <td>{props.page.note}</td>
       <td>{props.page.score}</td>
-      <td>{props.page.created_at}</td>
+      <td>{displayDatetime(props.page.created_at)}</td>
       <td>page.action</td>
     </tr>
   );
