@@ -12,8 +12,11 @@ export const PageItem = (props: Page) => {
   return (
     <tr>
       <td>{props.page.id}</td>
-      <td>{props.page.url}</td>
-      <td>{props.page.title}</td>
+      <td>
+        <a href={props.page.url} target="_blank">
+          {props.page.title}
+        </a>
+      </td>
       <td>{props.page.is_read}</td>
       <td>{props.page.note}</td>
       <td>{props.page.score}</td>
