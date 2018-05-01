@@ -1,14 +1,20 @@
 import * as React from 'react';
 
-import {Page} from '../entities/Page';
-import {DateService} from '../services/DateService.ts';
+import {Page} from '../entities';
+import {DateService} from '../services/DateService';
 
-const displayDatetime = utcTime => {
-  const d = new Date(Date.parse(utcTime));
+const displayDatetime = (utcTime: string) => {
+  const d: Date = new Date(Date.parse(utcTime));
   return DateService.toLocaleDateTimeString(d);
 };
 
-export const PageItem = (props: Page) => {
+interface PageItemProps {
+  page: Page;
+  removePage: (pageId: number) => void;
+  openEditModal: () => void;
+}
+
+export const PageItem = (props: PageItemProps) => {
   return (
     <tr>
       <td>{props.page.id}</td>

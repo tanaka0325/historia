@@ -1,5 +1,5 @@
 export class DateService {
-  static toLocaleDateTimeString(date) {
+  static toLocaleDateTimeString(date: Date) {
     const y = date.getFullYear();
     const m = (date.getMonth() + 1).toString().padStart(2, '0');
     const d = date

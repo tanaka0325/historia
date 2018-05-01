@@ -1,13 +1,19 @@
 import * as React from 'react';
-import * as axios from 'axios';
+import * as Axios from 'axios';
 
+import {Page} from '../entities';
 import {PageItem} from './PageItem';
 import {Modal} from './Modal';
 
 const API_URL = 'http://localhost:5000/pages';
 
-export class PageList extends React.Component {
-  constructor(props) {
+interface PageListState {
+  pages: Page[];
+  isModal: boolean;
+}
+
+export class PageList extends React.Component<{}, PageListState> {
+  constructor(props: {}) {
     super(props);
 
     this.state = {
@@ -21,7 +27,7 @@ export class PageList extends React.Component {
   }
 
   getPage() {
-    axios.get(API_URL).then(res => {
+    Axios.default.get(API_URL).then((res: any) => {
       this.setState({
         pages: res.data.pages,
       });
@@ -29,7 +35,7 @@ export class PageList extends React.Component {
   }
 
   removePage = (pageId: number) => {
-    axios.delete(`${API_URL}/${pageId}`).then(res => {
+    Axios.default.delete(`${API_URL}/${pageId}`).then((res: any) => {
       if (res.status == 204) {
         this.setState({
           pages: this.state.pages.filter(page => page.id != pageId),

@@ -1,10 +1,11 @@
 import * as React from 'react';
 
-export class Modal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+interface ModalProps {
+  closeModal: () => void;
+  isActive: boolean;
+}
 
+export class Modal extends React.Component<ModalProps, {}> {
   closeModal = () => {
     this.props.closeModal();
   };
