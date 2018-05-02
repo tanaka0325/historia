@@ -19,4 +19,12 @@ const page = {
 
 storiesOf('Page', module)
   .add('PageList', () => <PageList />)
-  .add('PageItem', () => <PageItem page={page} />);
+  .add('PageItem', () => {
+    return (
+      <table>
+        <tbody>
+          <PageItem page={page} />
+        </tbody>
+      </table>
+    );
+  });
