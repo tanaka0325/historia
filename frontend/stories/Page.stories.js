@@ -6,6 +6,7 @@ import {linkTo} from '@storybook/addon-links';
 
 import {PageList} from '../src/components/PageList';
 import {PageItem} from '../src/components/PageItem';
+import {PageForm} from '../src/components/PageForm';
 
 const page = {
   id: 1,
@@ -27,4 +28,5 @@ storiesOf('Page', module)
         </tbody>
       </table>
     );
-  });
+  })
+  .add('PageForm', () => <PageForm message="init message" />);
