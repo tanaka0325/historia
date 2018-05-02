@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as Axios from 'axios';
+import axios from 'axios';
 
 import {Page} from '../entities';
 import {PageItem} from './PageItem';
@@ -13,6 +13,9 @@ interface PageListState {
 }
 
 export class PageList extends React.Component<{}, PageListState> {
+  private CancelToken: any;
+  private source: any;
+
   constructor(props: {}) {
     super(props);
 
@@ -20,30 +23,48 @@ export class PageList extends React.Component<{}, PageListState> {
       pages: [],
       isModal: false,
     };
+
+    this.CancelToken = axios.CancelToken;
+    this.source = this.CancelToken.source();
   }
 
   componentDidMount() {
     this.getPage();
   }
 
+  componentWillUnmount() {
+    this.source.cancel('canceled');
+  }
+
   getPage() {
-    Axios.default.get(API_URL).then((res: any) => {
-      this.setState({
-        pages: res.data.pages,
+    axios
+      .get(API_URL, {cancelToken: this.source.token})
+      .then((res: any) => {
+        this.setState({
+          pages: res.data.pages,
+        });
+      })
+      .catch((err: any) => {
+        if (axios.isCancel(err)) {
+          console.log('Request canceled.', err.message);
+        } else {
+          console.log(err);
+        }
       });
-    });
   }
 
   removePage = (pageId: number) => {
-    Axios.default.delete(`${API_URL}/${pageId}`).then((res: any) => {
-      if (res.status == 204) {
-        this.setState({
-          pages: this.state.pages.filter(page => page.id != pageId),
-        });
-      } else {
-        console.log('error');
-      }
-    });
+    axios
+      .delete(`${API_URL}/${pageId}`, {cancelToken: this.source.token})
+      .then((res: any) => {
+        if (res.status == 204) {
+          this.setState({
+            pages: this.state.pages.filter(page => page.id != pageId),
+          });
+        } else {
+          console.log('error');
+        }
+      });
   };
 
   toggleModal = () => {
