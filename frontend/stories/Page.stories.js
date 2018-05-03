@@ -29,4 +29,4 @@ storiesOf('Page', module)
       </table>
     );
   })
-  .add('PageForm', () => <PageForm message="init message" />);
+  .add('PageForm', () => <PageForm />);

@@ -3,7 +3,6 @@ import axios from 'axios';
 
 import {Page} from '../entities';
 import {PageItem} from './PageItem';
-import {PageForm} from './PageForm';
 import {Modal} from './Modal';
 
 const API_URL = 'http://localhost:5000/pages';
@@ -86,7 +85,6 @@ export class PageList extends React.Component<{}, PageListState> {
       );
     });
     return [
-      <PageForm key="PageListForm" message="hello" />,
       <table key="PageListTable" className="table is-fullwidth is-hoverable">
         <thead>
           <tr>

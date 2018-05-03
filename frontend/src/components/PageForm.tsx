@@ -9,16 +9,10 @@ interface FormValues {
   score: number;
 }
 
-interface OtherProps {
-  message: string;
-}
-
-const InnerForm = (props: OtherProps & FormikProps<FormValues>) => {
-  const {touched, errors, isSubmitting, message} = props;
+const InnerForm = (props: FormikProps<FormValues>) => {
+  const {touched, errors, isSubmitting} = props;
   return (
     <Form>
-      <h1>{message}</h1>
-
       <div className="field">
         <label className="label">URL</label>
         <div className="control">
@@ -87,7 +81,6 @@ interface PageFormProps {
   initialIsRead?: boolean;
   initialNote?: string;
   initialScore?: number;
-  message: string;
 }
 
 export const PageForm = withFormik<PageFormProps, FormValues>({
