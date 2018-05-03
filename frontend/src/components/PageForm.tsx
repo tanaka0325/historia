@@ -16,7 +16,7 @@ const InnerForm = (props: FormikProps<FormValues>) => {
       <div className="field">
         <label className="label">URL</label>
         <div className="control">
-          <Field className="input" type="url" name="url" />
+          <Field className="input" type="url" name="url" required />
           {touched.url && errors.url && <div>{errors.url}</div>}
         </div>
       </div>
