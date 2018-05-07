@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {withFormik, FormikProps, FormikErrors, Form, Field} from 'formik';
+import axios from 'axios';
 
 interface FormValues {
   url: string;
@@ -95,6 +96,21 @@ export const PageForm = withFormik<PageFormProps, FormValues>({
   },
 
   handleSubmit: values => {
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/json;charset=UTF-8',
+        'Access-Control-Allow-Origin': '*',
+      },
+    };
+    const url = 'http://localhost:5000/pages/';
+    axios
+      .post(url, values, axiosConfig)
+      .then((res: any) => {
+        console.log(res);
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
     console.log(values);
   },
 })(InnerForm);
