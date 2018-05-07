@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "serve": "webpack-serve --config webpack.config.js --content dist/",
+    "serve": "webpack-serve --config webpack.config.js --content public/",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },
