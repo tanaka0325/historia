@@ -5,6 +5,7 @@ import {Page} from '../entities';
 import {PageItem} from './PageItem';
 import {PageForm} from './PageForm';
 import {Modal} from './Modal';
+import {ApiService} from '../services/ApiService';
 
 const API_URL = 'http://localhost:5000/pages';
 
@@ -16,6 +17,7 @@ interface PageListState {
 export class PageList extends React.Component<{}, PageListState> {
   private CancelToken: any;
   private source: any;
+  private apiService: any = new ApiService(API_URL);
 
   constructor(props: {}) {
     super(props);
@@ -34,24 +36,15 @@ export class PageList extends React.Component<{}, PageListState> {
   }
 
   componentWillUnmount() {
-    this.source.cancel('canceled');
+    this.apiService.cancel();
   }
 
   getPage() {
-    axios
-      .get(API_URL, {cancelToken: this.source.token})
-      .then((res: any) => {
-        this.setState({
-          pages: res.data.pages,
-        });
-      })
-      .catch((err: any) => {
-        if (axios.isCancel(err)) {
-          console.log('Request canceled.', err.message);
-        } else {
-          console.log(err);
-        }
+    this.apiService.get((res: any) => {
+      this.setState({
+        pages: res.data.pages,
       });
+    });
   }
 
   removePage = (pageId: number) => {
