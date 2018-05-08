@@ -5,13 +5,13 @@ from app.models import Page
 
 @app.route('/')
 @app.route('/index')
-@app.route('/pages/')
+@app.route('/pages')
 def index():
     pages = Page.query.all()
     return jsonify(pages=[page.serialize() for page in pages])
 
 
-@app.route('/pages/', methods=['POST'])
+@app.route('/pages', methods=['POST'])
 def pages():
     data = request.json
     page = Page(
