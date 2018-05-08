@@ -5,9 +5,7 @@ import {Page} from '../entities';
 import {PageItem} from './PageItem';
 import {PageForm} from './PageForm';
 import {Modal} from './Modal';
-import {ApiService} from '../services/ApiService';
-
-const API_URL = 'http://localhost:5000/pages';
+import {PageApiService} from '../services/PageApiService';
 
 interface PageListState {
   pages: Page[];
@@ -15,20 +13,14 @@ interface PageListState {
 }
 
 export class PageList extends React.Component<{}, PageListState> {
-  private CancelToken: any;
-  private source: any;
-  private apiService: any = new ApiService(API_URL);
+  private pageApiService: any = new PageApiService();
 
   constructor(props: {}) {
     super(props);
-
     this.state = {
       pages: [],
       isModal: false,
     };
-
-    this.CancelToken = axios.CancelToken;
-    this.source = this.CancelToken.source();
   }
 
   componentDidMount() {
@@ -36,11 +28,11 @@ export class PageList extends React.Component<{}, PageListState> {
   }
 
   componentWillUnmount() {
-    this.apiService.cancel();
+    this.pageApiService.cancel();
   }
 
   getPage() {
-    this.apiService.get((res: any) => {
+    this.pageApiService.get((res: any) => {
       this.setState({
         pages: res.data.pages,
       });
@@ -48,23 +40,25 @@ export class PageList extends React.Component<{}, PageListState> {
   }
 
   removePage = (pageId: number) => {
-    axios
-      .delete(`${API_URL}/${pageId}`, {cancelToken: this.source.token})
-      .then((res: any) => {
-        if (res.status == 204) {
-          this.setState({
-            pages: this.state.pages.filter(page => page.id != pageId),
-          });
-        } else {
-          console.log('error');
-        }
-      });
+    this.pageApiService.delete(pageId, (res: any) => {
+      if (res.status == 204) {
+        this.setState({
+          pages: this.state.pages.filter(page => page.id != pageId),
+        });
+      } else {
+        console.log('delete error');
+      }
+    });
   };
 
   toggleModal = () => {
     this.setState({
       isModal: !this.state.isModal,
     });
+  };
+
+  updateList = () => {
+    this.getPage();
   };
 
   render() {
@@ -79,7 +73,7 @@ export class PageList extends React.Component<{}, PageListState> {
       );
     });
     return [
-      <PageForm key="pageform" />,
+      <PageForm key="pageform" updateList={this.updateList} />,
       <table key="PageListTable" className="table is-fullwidth is-hoverable">
         <thead>
           <tr>

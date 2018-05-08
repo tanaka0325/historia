@@ -2,6 +2,8 @@ import * as React from 'react';
 import {withFormik, FormikProps, FormikErrors, Form, Field} from 'formik';
 import axios from 'axios';
 
+import {PageApiService} from '../services/PageApiService';
+
 interface FormValues {
   url: string;
   title: string;
@@ -82,6 +84,7 @@ interface PageFormProps {
   initialIsRead?: boolean;
   initialNote?: string;
   initialScore?: number;
+  updateList: any;
 }
 
 export const PageForm = withFormik<PageFormProps, FormValues>({
@@ -95,22 +98,11 @@ export const PageForm = withFormik<PageFormProps, FormValues>({
     };
   },
 
-  handleSubmit: values => {
-    const axiosConfig = {
-      headers: {
-        'Content-Type': 'application/json;charset=UTF-8',
-        'Access-Control-Allow-Origin': '*',
-      },
-    };
-    const url = 'http://localhost:5000/pages/';
-    axios
-      .post(url, values, axiosConfig)
-      .then((res: any) => {
-        console.log(res);
-      })
-      .catch((err: any) => {
-        console.log(err);
-      });
-    console.log(values);
+  handleSubmit: (values, {props, setSubmitting}) => {
+    const pageApiService: any = new PageApiService();
+    pageApiService.post(values, (res: any) => {
+      setSubmitting(false);
+      props.updateList();
+    });
   },
 })(InnerForm);
